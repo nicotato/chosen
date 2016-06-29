@@ -320,12 +320,13 @@ class Chosen extends AbstractChosen
       this.search_field_scale()
 
   results_reset: ->
-    this.reset_single_select_options()
+    select_options = this.reset_single_select_options()
+    reset_single_select = select_options.indexOf(false)
     @form_field.options[0].selected = true
     this.single_set_selected_text()
     this.show_search_field_default()
     this.results_reset_cleanup()
-    @form_field_jq.trigger "change"
+    @form_field_jq.trigger "change", {deselected: @form_field.options[reset_single_select].value}
     this.results_hide() if @active_field
 
   results_reset_cleanup: ->
